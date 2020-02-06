@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 import { gameboard } from './gameboard-module'
-import { ship } from './ship-module'
 
 describe('gameboard return a new gameboard', () => {
   test('gameboard have a grid', () => {
@@ -46,15 +45,5 @@ describe('placeShip work properly', () => {
     expect(test.grid['A'][2]).toBe(test.grid['A'][3])
     expect(test.grid['A'][2]).toBe(test.grid['A'][4])
     expect(test.grid['A'][2]).toBe(test.grid['A'][5])
-  })
-})
-
-describe('receiveAttack work properly', () => {
-  test('send hit to the correct ship', () => {
-    jest.mock('./ship-module')
-    const test = gameboard()
-    test.placeShip(['A', 2], 5, 'horizontal')
-    test.receiveAttack('A', 2)
-    expect(ship()).toBeTruthy()
   })
 })

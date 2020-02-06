@@ -22,6 +22,7 @@ const gameboard = () => {
       if (this.grid[horizontal][vertical]) {
         let shipLocation = this.grid[horizontal][vertical].location
       }
+      this.grid[horizontal][vertical].hit(4)
     },
   }
 
