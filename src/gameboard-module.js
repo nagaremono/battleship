@@ -19,10 +19,26 @@ const gameboard = () => {
 
   const receiveAttack = {
     receiveAttack: function receiveAttack(horizontal, vertical) {
-      if (this.grid[horizontal][vertical]) {
-        let shipLocation = this.grid[horizontal][vertical].location
+      if (this.grid[horizontal][vertical] === 'x') {
+        return false
+      } else if (this.grid[horizontal][vertical]) {
+        let shipStartAt = this.grid[horizontal][vertical].location
+        let shipDirection = this.grid[horizontal][vertical].direction
+        let locationHit = [horizontal, vertical]
+        let shipHitSpot = 0
+
+        if (shipDirection === 'vertical') {
+          shipHitSpot = locationHit[1] - shipStartAt[1]
+        } else {
+          shipHitSpot =
+            locationHit[0].charCodeAt(0) - shipStartAt[0].charCodeAt(0)
+        }
+
+        this.grid[horizontal][vertical].hit(shipHitSpot)
+      } else {
+        this.missedAttacks.push([horizontal, vertical])
+        this.grid[horizontal][vertical] = 'x'
       }
-      this.grid[horizontal][vertical].hit(4)
     },
   }
 
@@ -30,6 +46,7 @@ const gameboard = () => {
     placeShip: function placeShip(start, length, direction) {
       const toBePlaced = ship(length)
       toBePlaced.location = start
+      toBePlaced.direction = direction
 
       if (direction === 'vertical') {
         for (let i = 0; i < length; i++) {
@@ -46,13 +63,21 @@ const gameboard = () => {
     },
   }
 
+  const missedAttacks = { missedAttacks: [] }
   const isAllSunk = {
     isAllSunk: function isAllSunk() {
       return true
     },
   }
 
-  return Object.assign({}, grid, receiveAttack, placeShip, isAllSunk)
+  return Object.assign(
+    {},
+    grid,
+    receiveAttack,
+    placeShip,
+    missedAttacks,
+    isAllSunk
+  )
 }
 
 export { gameboard }
