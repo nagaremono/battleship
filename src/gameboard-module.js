@@ -64,8 +64,21 @@ const gameboard = () => {
   }
 
   const missedAttacks = { missedAttacks: [] }
+
   const isAllSunk = {
     isAllSunk: function isAllSunk() {
+      for (let horizontalKey in this.grid) {
+        for (let verticalKey in this.grid[horizontalKey]) {
+          if (
+            this.grid[horizontalKey][verticalKey] &&
+            this.grid[horizontalKey][verticalKey] !== 'x'
+          ) {
+            let result = this.grid[horizontalKey][verticalKey].isSunk()
+            if (result === true) continue
+            else return false
+          }
+        }
+      }
       return true
     },
   }

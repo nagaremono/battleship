@@ -47,3 +47,20 @@ describe('placeShip work properly', () => {
     expect(test.grid['A'][2]).toBe(test.grid['A'][5])
   })
 })
+
+describe('isAllSunk work properly', () => {
+  test('return false if one ship still not sunk', () => {
+    const test = gameboard()
+    test.placeShip(['A', 2], 4, 'vertical')
+    expect(test.isAllSunk()).toBe(false)
+  })
+  test('return true if every ship sank', () => {
+    const test = gameboard()
+    test.placeShip(['A', 2], 4, 'vertical')
+    test.receiveAttack('A', 2)
+    test.receiveAttack('A', 3)
+    test.receiveAttack('A', 4)
+    test.receiveAttack('A', 5)
+    expect(test.isAllSunk()).toBe(true)
+  })
+})
