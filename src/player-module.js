@@ -34,6 +34,7 @@ const computerPlayer = function() {
       } while (attackHistory.find(current => current === coord))
 
       player.playerGameboard.receiveAttack(horizontalKey, verticalKey)
+      attackHistory.push(coord)
     },
   }
 
