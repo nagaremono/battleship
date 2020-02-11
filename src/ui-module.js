@@ -1,4 +1,4 @@
-;(function() {
+const render = (function() {
   let playerGrid = document.querySelector('.player')
   let computerGrid = document.querySelector('.computer')
   let grids = [playerGrid, computerGrid]
@@ -35,3 +35,5 @@
     grid.appendChild(table)
   })
 })()
+
+export { render }
