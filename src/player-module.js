@@ -19,7 +19,7 @@ const computerPlayer = function() {
     placeComputerShip(5)
     placeComputerShip(4)
 
-    for (let i = 0; i < 2; i ++) {
+    for (let i = 0; i < 2; i++) {
       placeComputerShip(3)
     }
 

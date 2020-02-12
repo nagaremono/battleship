@@ -37,16 +37,16 @@ const render = (function() {
     grid.appendChild(table)
   })
 
-  const renderBoard = function(player, gridObject) {
+  const renderBoard = function(playerGrid, player) {
     let targetBoard =
       player === 'human' ? playerGrid.childNodes[0] : computerGrid.childNodes[0]
 
-    for (let horizontalKey in gridObject) {
-      for (let verticalKey in gridObject[horizontalKey]) {
-        if (gridObject[horizontalKey][verticalKey] === null) continue
-        else if (gridObject[horizontalKey][verticalKey] === 'x') {
+    for (let horizontalKey in playerGrid) {
+      for (let verticalKey in playerGrid[horizontalKey]) {
+        if (playerGrid[horizontalKey][verticalKey] === null) continue
+        else if (playerGrid[horizontalKey][verticalKey] === 'x') {
           renderBox(targetBoard, horizontalKey, verticalKey, 'X')
-        } else if (gridObject[horizontalKey][verticalKey]) {
+        } else if (playerGrid[horizontalKey][verticalKey]) {
           let box = document.createElement('div')
           box.style.backgroundColor = '#1e1e1e'
 
