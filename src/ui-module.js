@@ -41,16 +41,92 @@ const render = (function() {
     let targetBoard =
       player === 'human' ? playerGrid.childNodes[0] : computerGrid.childNodes[0]
 
-    for (let horizontalKey in gridObject) {
-      for (let verticalKey in gridObject[horizontalKey]) {
-        if (gridObject[horizontalKey][verticalKey] === null) continue
-        else if (gridObject[horizontalKey][verticalKey] === 'x') {
-          renderBox(targetBoard, horizontalKey, verticalKey, 'X')
-        } else if (gridObject[horizontalKey][verticalKey]) {
+    if (player === 'human') {
+      for (let horizontalKey in gridObject) {
+        for (let verticalKey in gridObject[horizontalKey]) {
           let box = document.createElement('div')
-          box.style.backgroundColor = '#1e1e1e'
+          box.style.width = '100%'
+          box.style.height = '100%'
+          if (gridObject[horizontalKey][verticalKey] === null) continue
+          else if (gridObject[horizontalKey][verticalKey] === 'x') {
+            box.textContent = 'X'
+            box.style.fontSize = '25px'
+            box.style.textAlign = 'center'
+            box.style.lineHeight = '100%'
+            box.style.color = '#1e1e1e'
 
-          renderBox(targetBoard, horizontalKey, verticalKey, box)
+            renderBox(targetBoard, horizontalKey, verticalKey, box)
+          } else if (gridObject[horizontalKey][verticalKey]) {
+            box.style.backgroundColor = '#c4c4c4'
+
+            let shipStart = gridObject[horizontalKey][verticalKey].location
+            let shipDirection = gridObject[horizontalKey][verticalKey].direction
+            let shipPlacesHit = gridObject[horizontalKey][verticalKey].placesHit
+            let hitSpot = 0
+
+            if (shipDirection === 'vertical') {
+              hitSpot = verticalKey - shipStart[1] + 1
+            } else if (shipDirection === 'horizontal') {
+              hitSpot =
+                horizontalKey.charCodeAt(0) - shipStart[0].charCodeAt(0) + 1
+            }
+
+            shipPlacesHit.forEach(place => {
+              if (place === hitSpot) {
+                box.textContent = 'X'
+                box.style.fontSize = '25px'
+                box.style.textAlign = 'center'
+                box.style.lineHeight = '100%'
+                box.style.color = '#1e1e1e'
+              }
+            })
+
+            renderBox(targetBoard, horizontalKey, verticalKey, box)
+          }
+        }
+      }
+    } else if (player === 'computer') {
+      for (let horizontalKey in gridObject) {
+        for (let verticalKey in gridObject[horizontalKey]) {
+          let box = document.createElement('div')
+          box.style.width = '100%'
+          box.style.height = '100%'
+          if (gridObject[horizontalKey][verticalKey] === null) continue
+          else if (gridObject[horizontalKey][verticalKey] === 'x') {
+            box.textContent = 'X'
+            box.style.fontSize = '25px'
+            box.style.textAlign = 'center'
+            box.style.lineHeight = '100%'
+            box.style.color = '#1e1e1e'
+
+            renderBox(targetBoard, horizontalKey, verticalKey, box)
+          } else if (gridObject[horizontalKey][verticalKey]) {
+            box.style.backgroundColor = '#c4c4c4'
+
+            let shipStart = gridObject[horizontalKey][verticalKey].location
+            let shipDirection = gridObject[horizontalKey][verticalKey].direction
+            let shipPlacesHit = gridObject[horizontalKey][verticalKey].placesHit
+            let hitSpot = 0
+
+            if (shipDirection === 'vertical') {
+              hitSpot = verticalKey - shipStart[1] + 1
+            } else if (shipDirection === 'horizontal') {
+              hitSpot =
+                horizontalKey.charCodeAt(0) - shipStart[0].charCodeAt(0) + 1
+            }
+
+            shipPlacesHit.forEach(place => {
+              if (place === hitSpot) {
+                box.textContent = 'X'
+                box.style.fontSize = '25px'
+                box.style.textAlign = 'center'
+                box.style.lineHeight = '100%'
+                box.style.color = '#1e1e1e'
+
+                renderBox(targetBoard, horizontalKey, verticalKey, box)
+              }
+            })
+          }
         }
       }
     }
@@ -66,7 +142,10 @@ const render = (function() {
           box.dataset.horizontal === horizontal &&
           box.dataset.vertical === vertical
         ) {
-          box.innerHtml = marker
+          box.appendChild(marker)
+          if (box.childNodes.length > 1) {
+            box.removeChild(box.childNodes[0])
+          }
         }
       })
     })

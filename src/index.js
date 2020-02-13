@@ -13,21 +13,22 @@ const game = (function() {
     currentPlayer = human
     opponent = computer
 
-    human.playerGameBoard.placeShip(['A', 0], 5, 'horizontal')
-    human.playerGameBoard.placeShip(['A', 1], 4, 'horizontal')
-    human.playerGameBoard.placeShip(['F', 0], 3, 'horizontal')
-    human.playerGameBoard.placeShip(['F', 1], 3, 'vertical')
-    human.playerGameBoard.placeShip(['B', 7], 2, 'horizontal')
-    human.playerGameBoard.placeShip(['B', 8], 2, 'horizontal')
-    human.playerGameBoard.placeShip(['B', 9], 2, 'horizontal')
-    human.playerGameBoard.placeShip(['G', 9], 1, 'horizontal')
-    human.playerGameBoard.placeShip(['H', 9], 1, 'horizontal')
-    human.playerGameBoard.placeShip(['I', 9], 1, 'horizontal')
-    human.playerGameBoard.placeShip(['J', 9], 1, 'horizontal')
+    human.playerGameboard.placeShip(['A', 0], 5, 'horizontal')
+    human.playerGameboard.placeShip(['A', 1], 4, 'horizontal')
+    human.playerGameboard.placeShip(['F', 0], 3, 'horizontal')
+    human.playerGameboard.placeShip(['F', 1], 3, 'vertical')
+    human.playerGameboard.placeShip(['B', 7], 2, 'horizontal')
+    human.playerGameboard.placeShip(['B', 8], 2, 'horizontal')
+    human.playerGameboard.placeShip(['B', 9], 2, 'horizontal')
+    human.playerGameboard.placeShip(['G', 9], 1, 'horizontal')
+    human.playerGameboard.placeShip(['H', 9], 1, 'horizontal')
+    human.playerGameboard.placeShip(['I', 9], 1, 'horizontal')
+    human.playerGameboard.placeShip(['J', 9], 1, 'horizontal')
 
-    render.renderBoard('human', human.playerGameBoard.grid)
+    render.renderBoard('human', human.playerGameboard.grid)
   }
 
   return { startGame }
 })()
 
+game.startGame()

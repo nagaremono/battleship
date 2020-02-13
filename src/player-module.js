@@ -91,9 +91,16 @@ const computerPlayer = function() {
     } else if (direction === 'horizontal') {
       for (let i = 0; i < length; i++) {
         let horizontalKey = coord[0].charCodeAt(0) + i
-        horizontalKey = String.fromCharCode(horizontalKey)
 
-        if (playerGameboard.grid[horizontalKey][coord[1]]) {
+        try {
+          playerGameboard.grid[String.fromCharCode(horizontalKey)][coord[1]]
+        } catch (error) {
+          return true
+        }
+
+        if (
+          playerGameboard.grid[String.fromCharCode(horizontalKey)][coord[1]]
+        ) {
           return true
         } else continue
       }
@@ -110,7 +117,7 @@ const computerPlayer = function() {
       direction = generateRandomDirection()
     } while (isOccupied(coord, length, direction))
 
-    playerGameboard.grid.placeShip(coord, length, direction)
+    playerGameboard.placeShip(coord, length, direction)
   }
   return Object.assign({}, { playerGameboard: playerGameboard }, attack)
 }
