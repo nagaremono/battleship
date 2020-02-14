@@ -44,88 +44,56 @@ const render = (function() {
     if (player === 'human') {
       for (let horizontalKey in gridObject) {
         for (let verticalKey in gridObject[horizontalKey]) {
-          let box = document.createElement('div')
-          box.style.width = '100%'
-          box.style.height = '100%'
           if (gridObject[horizontalKey][verticalKey] === null) continue
           else if (gridObject[horizontalKey][verticalKey] === 'x') {
-            box.textContent = 'X'
-            box.style.fontSize = '25px'
-            box.style.textAlign = 'center'
-            box.style.lineHeight = '100%'
-            box.style.color = '#1e1e1e'
-
-            renderBox(targetBoard, horizontalKey, verticalKey, box)
+            renderBox(targetBoard, horizontalKey, verticalKey, 'missed')
           } else if (gridObject[horizontalKey][verticalKey]) {
-            box.style.backgroundColor = '#c4c4c4'
-
             let shipStart = gridObject[horizontalKey][verticalKey].location
             let shipDirection = gridObject[horizontalKey][verticalKey].direction
             let shipPlacesHit = gridObject[horizontalKey][verticalKey].placesHit
-            let hitSpot = 0
-
-            if (shipDirection === 'vertical') {
-              hitSpot = verticalKey - shipStart[1] + 1
-            } else if (shipDirection === 'horizontal') {
-              hitSpot =
-                horizontalKey.charCodeAt(0) - shipStart[0].charCodeAt(0) + 1
-            }
-
-            shipPlacesHit.forEach(place => {
-              if (place === hitSpot) {
-                box.textContent = 'X'
-                box.style.fontSize = '25px'
-                box.style.textAlign = 'center'
-                box.style.lineHeight = '100%'
-                box.style.color = '#1e1e1e'
+            let hitSpot = ''
+            if (shipPlacesHit.length === 0) {
+              renderBox(targetBoard, horizontalKey, verticalKey, 'exist')
+            } else {
+              if (shipDirection === 'vertical') {
+                hitSpot = verticalKey - shipStart[1] + 1
+              } else if (shipDirection === 'horizontal') {
+                hitSpot =
+                  horizontalKey.charCodeAt(0) - shipStart[0].charCodeAt(0) + 1
               }
-            })
-
-            renderBox(targetBoard, horizontalKey, verticalKey, box)
+              shipPlacesHit.forEach(place => {
+                if (place === hitSpot) {
+                  renderBox(targetBoard, horizontalKey, verticalKey, 'hit')
+                }
+              })
+            }
           }
         }
       }
     } else if (player === 'computer') {
       for (let horizontalKey in gridObject) {
         for (let verticalKey in gridObject[horizontalKey]) {
-          let box = document.createElement('div')
-          box.style.width = '100%'
-          box.style.height = '100%'
           if (gridObject[horizontalKey][verticalKey] === null) continue
           else if (gridObject[horizontalKey][verticalKey] === 'x') {
-            box.textContent = 'X'
-            box.style.fontSize = '25px'
-            box.style.textAlign = 'center'
-            box.style.lineHeight = '100%'
-            box.style.color = '#1e1e1e'
-
-            renderBox(targetBoard, horizontalKey, verticalKey, box)
+            renderBox(targetBoard, horizontalKey, verticalKey, 'missed')
           } else if (gridObject[horizontalKey][verticalKey]) {
-            box.style.backgroundColor = '#c4c4c4'
-
             let shipStart = gridObject[horizontalKey][verticalKey].location
             let shipDirection = gridObject[horizontalKey][verticalKey].direction
             let shipPlacesHit = gridObject[horizontalKey][verticalKey].placesHit
-            let hitSpot = 0
-
-            if (shipDirection === 'vertical') {
-              hitSpot = verticalKey - shipStart[1] + 1
-            } else if (shipDirection === 'horizontal') {
-              hitSpot =
-                horizontalKey.charCodeAt(0) - shipStart[0].charCodeAt(0) + 1
-            }
-
-            shipPlacesHit.forEach(place => {
-              if (place === hitSpot) {
-                box.textContent = 'X'
-                box.style.fontSize = '25px'
-                box.style.textAlign = 'center'
-                box.style.lineHeight = '100%'
-                box.style.color = '#1e1e1e'
-
-                renderBox(targetBoard, horizontalKey, verticalKey, box)
+            let hitSpot = ''
+            if (shipPlacesHit.length > 0) {
+              if (shipDirection === 'vertical') {
+                hitSpot = verticalKey - shipStart[1] + 1
+              } else if (shipDirection === 'horizontal') {
+                hitSpot =
+                  horizontalKey.charCodeAt(0) - shipStart[0].charCodeAt(0) + 1
               }
-            })
+              shipPlacesHit.forEach(place => {
+                if (place === hitSpot) {
+                  renderBox(targetBoard, horizontalKey, verticalKey, 'hit')
+                }
+              })
+            }
           }
         }
       }
@@ -153,7 +121,15 @@ const render = (function() {
           box.dataset.horizontal === horizontal &&
           box.dataset.vertical === vertical
         ) {
-          box.appendChild(marker)
+          if (marker === 'missed') {
+            box.textContent = 'X'
+          } else if (marker === 'exist') {
+            box.style.backgroundColor = '#c4c4c4'
+          } else if (marker === 'hit') {
+            box.style.backgroundColor = '#c4c4c4'
+            box.textContent = 'X'
+            box.style.color = '#1e1e1e'
+          }
           if (box.childNodes.length > 1) {
             box.removeChild(box.childNodes[0])
           }
