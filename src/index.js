@@ -28,7 +28,35 @@ const game = (function() {
     render.renderBoard('human', human.playerGameboard.grid)
   }
 
-  return { startGame }
+  const runOneRound = function() {
+    currentPlayerAttack()
+    isGameOver()
+    currentPlayerAttack()
+    isGameOver()
+  }
+
+  function currentPlayerAttack(coord) {
+    if (currentPlayer.type === 'human') currentPlayer.attack(opponent, coord)
+    else if (currentPlayer.type === 'computer') currentPlayer.attack(opponent)
+    render.renderBoard(opponent.type, opponent.playerGameboard.grid)
+    let temp = currentPlayer
+    currentPlayer = opponent
+    opponent = temp
+  }
+
+  function isGameOver() {
+    let winner = checkWinner()
+    if (winner) {
+      render.renderWinner(winner)
+    }
+  }
+
+  function checkWinner() {
+    if (human.playerGameboard.isAllSunk()) return 'computer'
+    else if (computer.playerGameboard.isAllSunk()) return 'human'
+    else return null
+  }
+  return { startGame, runOneRound }
 })()
 
 game.startGame()
