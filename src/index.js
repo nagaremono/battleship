@@ -28,8 +28,8 @@ const game = (function() {
     render.renderBoard('human', human.playerGameboard.grid)
   }
 
-  const runOneRound = function() {
-    currentPlayerAttack()
+  const runOneRound = function(coord) {
+    currentPlayerAttack(coord)
     isGameOver()
     currentPlayerAttack()
     isGameOver()
@@ -52,11 +52,29 @@ const game = (function() {
   }
 
   function checkWinner() {
-    if (human.playerGameboard.isAllSunk()) return 'computer'
-    else if (computer.playerGameboard.isAllSunk()) return 'human'
+    if (human.playerGameboard.isAllSunk() === true) return 'computer'
+    else if (computer.playerGameboard.isAllSunk() === true) return 'human'
     else return null
   }
   return { startGame, runOneRound }
 })()
 
 game.startGame()
+;(function attachListeners() {
+  let computerGrid = document.querySelector('.computer').childNodes[0]
+
+  let rows = computerGrid.childNodes
+
+  rows.forEach(row => {
+    let boxes = row.childNodes
+    boxes.forEach(box => {
+      box.addEventListener('click', event => {
+        let horizontal = event.target.dataset.horizontal
+        let vertical = event.target.dataset.vertical
+        let coord = [horizontal, vertical]
+
+        game.runOneRound(coord)
+      })
+    })
+  })
+})()

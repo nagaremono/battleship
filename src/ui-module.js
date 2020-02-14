@@ -56,10 +56,10 @@ const render = (function() {
               renderBox(targetBoard, horizontalKey, verticalKey, 'exist')
             } else {
               if (shipDirection === 'vertical') {
-                hitSpot = verticalKey - shipStart[1] + 1
+                hitSpot = verticalKey - shipStart[1]
               } else if (shipDirection === 'horizontal') {
                 hitSpot =
-                  horizontalKey.charCodeAt(0) - shipStart[0].charCodeAt(0) + 1
+                  horizontalKey.charCodeAt(0) - shipStart[0].charCodeAt(0)
               }
               shipPlacesHit.forEach(place => {
                 if (place === hitSpot) {
@@ -83,10 +83,10 @@ const render = (function() {
             let hitSpot = ''
             if (shipPlacesHit.length > 0) {
               if (shipDirection === 'vertical') {
-                hitSpot = verticalKey - shipStart[1] + 1
+                hitSpot = verticalKey - shipStart[1]
               } else if (shipDirection === 'horizontal') {
                 hitSpot =
-                  horizontalKey.charCodeAt(0) - shipStart[0].charCodeAt(0) + 1
+                  horizontalKey.charCodeAt(0) - shipStart[0].charCodeAt(0)
               }
               shipPlacesHit.forEach(place => {
                 if (place === hitSpot) {
@@ -129,9 +129,6 @@ const render = (function() {
             box.style.backgroundColor = '#c4c4c4'
             box.textContent = 'X'
             box.style.color = '#1e1e1e'
-          }
-          if (box.childNodes.length > 1) {
-            box.removeChild(box.childNodes[0])
           }
         }
       })
