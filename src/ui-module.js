@@ -132,6 +132,17 @@ const render = (function() {
     }
   }
 
+  const renderWinner = function(winner) {
+    let announcementBox = document.querySelector('.winner')
+    let announcement = document.createElement('p')
+    if (winner === 'human') {
+      announcement.textContent = 'Congratulations! You Won!'
+    } else if (winner === 'computer') {
+      announcement.textContent = 'Too bad! You Lost!'
+    }
+
+    announcementBox.appendChild(announcement)
+  }
   function renderBox(board, horizontal, vertical, marker) {
     let rows = board.childNodes
 
@@ -151,7 +162,7 @@ const render = (function() {
     })
   }
 
-  return { renderBoard }
+  return { renderBoard, renderWinner }
 })()
 
 export { render }

@@ -3,17 +3,21 @@ import { gameboard } from './gameboard-module'
 const humanPlayer = function() {
   const playerGameboard = gameboard()
 
+  const type = { type: 'human' }
+
   const attack = {
     attack: function attack(player, coordArray) {
       player.playerGameboard.receiveAttack(coordArray[0], coordArray[1])
     },
   }
 
-  return Object.assign({}, { playerGameboard: playerGameboard }, attack)
+  return Object.assign({}, { playerGameboard: playerGameboard }, attack, type)
 }
 
 const computerPlayer = function() {
   const playerGameboard = gameboard()
+
+  const type = { type: 'computer' }
 
   ;(function fillComputerBoard() {
     placeComputerShip(5)
@@ -119,7 +123,7 @@ const computerPlayer = function() {
 
     playerGameboard.placeShip(coord, length, direction)
   }
-  return Object.assign({}, { playerGameboard: playerGameboard }, attack)
+  return Object.assign({}, { playerGameboard: playerGameboard }, attack, type)
 }
 
 export { humanPlayer, computerPlayer }
