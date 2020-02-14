@@ -15,6 +15,7 @@ main {
 h1 {
   display: flex;
   justify-content: center;
+  align-items: center;
   grid-column: 2 / -2;
   grid-row: 0;
 }
@@ -54,6 +55,10 @@ td {
   height: 11px;
 }
 
+td:hover {
+  background-color: #c20c0c;
+}
+
 tr:nth-child(1) td {
   border: none;
 }
@@ -64,12 +69,23 @@ td:nth-child(1) {
 
 .button {
   grid-row: 4;
-  grid-column: 2 / -2;
+  grid-column: 4 / -2;
   display: flex;
   justify-content: center;
 }
 
 .reset {
-  width: 25%;
+  width: 50%;
   height: 80%;
+}
+
+.winner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column: 2;
+  grid-row: 4;
+  font-size: 25px;
+  color: #182d86;
+  background-color: #ffffff;
 }
