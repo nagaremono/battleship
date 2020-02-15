@@ -102,6 +102,8 @@ const render = (function() {
 
   const renderWinner = function(winner) {
     let announcementBox = document.querySelector('.winner')
+
+    if (announcementBox.childNodes.length > 1) return false
     let announcement = document.createElement('p')
     if (winner === 'human') {
       announcement.textContent = 'Congratulations! You Won!'

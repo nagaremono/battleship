@@ -56,6 +56,7 @@ const game = (function() {
     else if (computer.playerGameboard.isAllSunk() === true) return 'human'
     else return null
   }
+
   return { startGame, runOneRound }
 })()
 
@@ -69,6 +70,12 @@ game.startGame()
     let boxes = row.childNodes
     boxes.forEach(box => {
       box.addEventListener('click', event => {
+        if (
+          event.target.textContent === 'X' ||
+          event.target.style.backgroundColor === '#c4c4c4'
+        ) {
+          return
+        }
         let horizontal = event.target.dataset.horizontal
         let vertical = event.target.dataset.vertical
         let coord = [horizontal, vertical]
