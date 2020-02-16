@@ -26,6 +26,8 @@ const game = (function() {
     human.playerGameboard.placeShip(['J', 9], 1, 'horizontal')
 
     render.renderBoard('human', human.playerGameboard.grid)
+
+    attachListeners()
   }
 
   const runOneRound = function(coord) {
@@ -57,31 +59,32 @@ const game = (function() {
     else return null
   }
 
+  function attachListeners() {
+    let computerGrid = document.querySelector('.computer').childNodes[0]
+
+    let rows = computerGrid.childNodes
+
+    rows.forEach(row => {
+      let boxes = row.childNodes
+      boxes.forEach(box => {
+        box.addEventListener('click', event => {
+          if (
+            event.target.textContent === 'X' ||
+            event.target.style.backgroundColor === '#c4c4c4'
+          ) {
+            return
+          }
+          let horizontal = event.target.dataset.horizontal
+          let vertical = event.target.dataset.vertical
+          let coord = [horizontal, vertical]
+
+          game.runOneRound(coord)
+        })
+      })
+    })
+  }
+
   return { startGame, runOneRound }
 })()
 
 game.startGame()
-;(function attachListeners() {
-  let computerGrid = document.querySelector('.computer').childNodes[0]
-
-  let rows = computerGrid.childNodes
-
-  rows.forEach(row => {
-    let boxes = row.childNodes
-    boxes.forEach(box => {
-      box.addEventListener('click', event => {
-        if (
-          event.target.textContent === 'X' ||
-          event.target.style.backgroundColor === '#c4c4c4'
-        ) {
-          return
-        }
-        let horizontal = event.target.dataset.horizontal
-        let vertical = event.target.dataset.vertical
-        let coord = [horizontal, vertical]
-
-        game.runOneRound(coord)
-      })
-    })
-  })
-})()

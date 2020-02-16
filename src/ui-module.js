@@ -41,59 +41,31 @@ const render = (function() {
     let targetBoard =
       player === 'human' ? playerGrid.childNodes[0] : computerGrid.childNodes[0]
 
-    if (player === 'human') {
-      for (let horizontalKey in gridObject) {
-        for (let verticalKey in gridObject[horizontalKey]) {
-          if (gridObject[horizontalKey][verticalKey] === null) continue
-          else if (gridObject[horizontalKey][verticalKey] === 'x') {
-            renderBox(targetBoard, horizontalKey, verticalKey, 'missed')
-          } else if (gridObject[horizontalKey][verticalKey]) {
-            let shipStart = gridObject[horizontalKey][verticalKey].location
-            let shipDirection = gridObject[horizontalKey][verticalKey].direction
-            let shipPlacesHit = gridObject[horizontalKey][verticalKey].placesHit
-            let hitSpot = ''
-            if (shipPlacesHit.length === 0) {
-              renderBox(targetBoard, horizontalKey, verticalKey, 'exist')
-            } else {
-              if (shipDirection === 'vertical') {
-                hitSpot = verticalKey - shipStart[1]
-              } else if (shipDirection === 'horizontal') {
-                hitSpot =
-                  horizontalKey.charCodeAt(0) - shipStart[0].charCodeAt(0)
-              }
-              shipPlacesHit.forEach(place => {
-                if (place === hitSpot) {
-                  renderBox(targetBoard, horizontalKey, verticalKey, 'hit')
-                }
-              })
-            }
+    for (let horizontalKey in gridObject) {
+      for (let verticalKey in gridObject[horizontalKey]) {
+        if (gridObject[horizontalKey][verticalKey] === null) continue
+        else if (gridObject[horizontalKey][verticalKey] === 'x') {
+          renderBox(targetBoard, horizontalKey, verticalKey, 'missed')
+        } else if (gridObject[horizontalKey][verticalKey]) {
+          let ship = gridObject[horizontalKey][verticalKey]
+          let shipStart = ship.location
+          let shipDirection = ship.direction
+          let shipPlacesHit = ship.placesHit
+          let hitSpot = ''
+          if (shipPlacesHit.length === 0 && player === 'human') {
+            renderBox(targetBoard, horizontalKey, verticalKey, 'exist')
           }
-        }
-      }
-    } else if (player === 'computer') {
-      for (let horizontalKey in gridObject) {
-        for (let verticalKey in gridObject[horizontalKey]) {
-          if (gridObject[horizontalKey][verticalKey] === null) continue
-          else if (gridObject[horizontalKey][verticalKey] === 'x') {
-            renderBox(targetBoard, horizontalKey, verticalKey, 'missed')
-          } else if (gridObject[horizontalKey][verticalKey]) {
-            let shipStart = gridObject[horizontalKey][verticalKey].location
-            let shipDirection = gridObject[horizontalKey][verticalKey].direction
-            let shipPlacesHit = gridObject[horizontalKey][verticalKey].placesHit
-            let hitSpot = ''
-            if (shipPlacesHit.length > 0) {
-              if (shipDirection === 'vertical') {
-                hitSpot = verticalKey - shipStart[1]
-              } else if (shipDirection === 'horizontal') {
-                hitSpot =
-                  horizontalKey.charCodeAt(0) - shipStart[0].charCodeAt(0)
-              }
-              shipPlacesHit.forEach(place => {
-                if (place === hitSpot) {
-                  renderBox(targetBoard, horizontalKey, verticalKey, 'hit')
-                }
-              })
+          if (shipPlacesHit.length > 0) {
+            if (shipDirection === 'vertical') {
+              hitSpot = verticalKey - shipStart[1]
+            } else if (shipDirection === 'horizontal') {
+              hitSpot = horizontalKey.charCodeAt(0) - shipStart[0].charCodeAt(0)
             }
+            shipPlacesHit.forEach(place => {
+              if (place === hitSpot) {
+                renderBox(targetBoard, horizontalKey, verticalKey, 'hit')
+              }
+            })
           }
         }
       }
@@ -111,8 +83,11 @@ const render = (function() {
       announcement.textContent = 'Too bad! You Lost!'
     }
 
-    announcementBox.appendChild(announcement)
+    if (announcementBox.childNodes.length === 0) {
+      announcementBox.appendChild(announcement)
+    }
   }
+
   function renderBox(board, horizontal, vertical, marker) {
     let rows = board.childNodes
 
