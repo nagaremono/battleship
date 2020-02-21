@@ -13,17 +13,7 @@ const game = (function() {
     currentPlayer = human
     opponent = computer
 
-    human.playerGameboard.placeShip(['A', 0], 5, 'horizontal')
-    human.playerGameboard.placeShip(['A', 1], 4, 'horizontal')
-    human.playerGameboard.placeShip(['F', 0], 3, 'horizontal')
-    human.playerGameboard.placeShip(['F', 1], 3, 'vertical')
-    human.playerGameboard.placeShip(['B', 7], 2, 'horizontal')
-    human.playerGameboard.placeShip(['B', 8], 2, 'horizontal')
-    human.playerGameboard.placeShip(['B', 9], 2, 'horizontal')
-    human.playerGameboard.placeShip(['G', 9], 1, 'horizontal')
-    human.playerGameboard.placeShip(['H', 9], 1, 'horizontal')
-    human.playerGameboard.placeShip(['I', 9], 1, 'horizontal')
-    human.playerGameboard.placeShip(['J', 9], 1, 'horizontal')
+    initializeBoard()
 
     render.renderBoard('human', human.playerGameboard.grid)
 
@@ -57,6 +47,20 @@ const game = (function() {
     if (human.playerGameboard.isAllSunk() === true) return 'computer'
     else if (computer.playerGameboard.isAllSunk() === true) return 'human'
     else return null
+  }
+
+  function initializeBoard() {
+    const playerShips = JSON.parse(localStorage.getItem('form'))
+    const shipLengthList = [5, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
+    let i = 0
+
+    for (let ship of playerShips) {
+      let coord = [ship.horizontal, +ship.vertical]
+      let direction = ship.direction
+
+      human.playerGameboard.placeShip(coord, shipLengthList[i], direction)
+      i++
+    }
   }
 
   function attachListeners() {
