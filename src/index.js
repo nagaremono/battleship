@@ -91,4 +91,6 @@ const game = (function() {
   return { startGame, runOneRound }
 })()
 
-game.startGame()
+;(function() {
+  
+})()
